@@ -16,6 +16,17 @@ try
     var cred = new DefaultAzureCredential();
     var client = new DigitalTwinsClient(new Uri(adtInstanceUrl), cred);
     Console.WriteLine($"OK. ADT service client connection created.");
+
+    // Create some fake data
+    var updateTwinData = new JsonPatchDocument();
+    //updateTwinData.AppendAdd($"/SerialNumber", "Digital Twins CLI");
+    updateTwinData.AppendReplace($"/SerialNumber", "Digital Twins CLI Replaced me");
+
+    // Update it!
+    var twinId = "west-1-Device";
+    await client.UpdateDigitalTwinAsync(twinId, updateTwinData);
+
+    Console.WriteLine($"OK. Sent update to digital twin `{twinId}`");
 }
 catch (Exception ex)
 {
