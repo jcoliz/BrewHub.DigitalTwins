@@ -1,0 +1,35 @@
+{
+    "@context": "dtmi:dtdl:context;2",
+    "@id": "dtmi:com:brewhub:machinery:distilateur;1",
+    "@type": "Interface",
+    "displayName": "Distilateur Unit",
+    "contents": [
+        {
+            "@type": "Property",
+            "name": "Name",
+            "schema": "string",
+            "writable": true
+        },
+        {
+            "@type": "Relationship",
+            "@id": "dtmi:com:brewhub:rel:rel_has_device;1",
+            "name": "rel_has_device",
+            "displayName": "Has Device",
+            "target": "dtmi:brewhub:devices:BaseDevice;1"
+        },
+        {
+            "@type": "Relationship",
+            "@id": "dtmi:com:brewhub:rel:rel_has_thermostat;1",
+            "name": "rel_has_thermostat",
+            "displayName": "Has Thermostat",
+            "target": "dtmi:brewhub:controls:Thermostat;1"
+        },
+        {
+            "@type": "Relationship",
+            "@id": "dtmi:com:brewhub:rel:rel_has_ambient;1",
+            "name": "rel_has_ambient",
+            "displayName": "Has Ambient",
+            "target": "dtmi:brewhub:sensors:TH;1"
+        }
+    ]
+}
