@@ -1,0 +1,13 @@
+{
+    "SerialNumber": "empty",
+    "StartTime": "2000-01-01T00:00:00",
+    "TelemetryInterval": "PT0S",
+    "manufacturer": "empty",
+    "model": "empty",
+    "swVersion": "empty",
+    "osName": "empty",
+    "processorArchitecture": "empty",
+    "processorManufacturer": "empty",
+    "totalStorage": 0,
+    "totalMemory": 0
+}
