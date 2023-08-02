@@ -1,4 +1,5 @@
 using Azure;
+using BrewHub.Dashboard.Core.Models;
 using BrewHub.Dashboard.Core.Providers;
 
 namespace BrewHub.DigitalTwins.Replicator;
@@ -46,7 +47,12 @@ public class Worker : BackgroundService
             }
 
             // Upload telemetry to "Current{Metric}" property
-            foreach(var point in data.Where(x=>x.__Component == null && telemetry.Contains(x.__Field)))
+            var metrics = telemetry.Select(x => new Datapoint() { __Field = x, __Component = null, __Model = "dtmi:brewhub:prototypes:still_6_unit;1" });
+            var values = await _datasource.GetSingleDeviceMetricsAsync(device, metrics, TimeSpan.FromMinutes(5), TimeSpan.FromMinutes(6));
+
+            // Just need the early values
+            var firstvalues = values.ToLookup(x => x.__Time).OrderBy(x=>x.Key).First();
+            foreach(var point in firstvalues)
             {
                 updateTwinData.AppendReplace($"/Current{point.__Field}", point.__Value);
             }
