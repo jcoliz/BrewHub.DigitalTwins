@@ -8,6 +8,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Alexinea.Extensions.Configuration.Toml" Version="7.0.0" />
+    <PackageReference Include="InfluxDB.Client" Version="3.2.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="config.toml" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="pwsh --command &quot; &amp;'$(ProjectDir)..\scripts\Get-Version.ps1' &gt; '$(ProjectDir)version.txt' &quot;" />
+  </Target>
+
+  <ItemGroup>
+    <EmbeddedResource Include="version.txt" />  
+  </ItemGroup>
+
 </Project>
