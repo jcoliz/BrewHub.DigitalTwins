@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrewHub.DigitalTwins.Console", "Console\BrewHub.DigitalTwins.Console.csproj", "{26C8D2AF-4544-4001-BF77-5266AD9CF190}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrewHub.DigitalTwins.Replicator", "Replicator\BrewHub.DigitalTwins.Replicator.csproj", "{B3EB474A-6797-414D-B64C-2F3F9149C972}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{26C8D2AF-4544-4001-BF77-5266AD9CF190}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26C8D2AF-4544-4001-BF77-5266AD9CF190}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26C8D2AF-4544-4001-BF77-5266AD9CF190}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3EB474A-6797-414D-B64C-2F3F9149C972}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3EB474A-6797-414D-B64C-2F3F9149C972}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3EB474A-6797-414D-B64C-2F3F9149C972}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3EB474A-6797-414D-B64C-2F3F9149C972}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
