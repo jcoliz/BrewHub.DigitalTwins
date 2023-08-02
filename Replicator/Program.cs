@@ -34,7 +34,13 @@ IHost host = Host.CreateDefaultBuilder(args)
             context.Configuration.GetSection(InfluxDBDataSource.Options.Section)
         );        
         services.AddSingleton<IDataSource, InfluxDBDataSource>();
-        
+
+        // Handle Azure Digital Twins service connection
+        services.Configure<TwinsClient.Options>(
+            context.Configuration.GetSection(TwinsClient.Options.Section)
+        );        
+        services.AddSingleton<ITwinsClient, TwinsClient>();
+
         services.AddHostedService<Worker>();
     })
     .ConfigureAppConfiguration(config =>

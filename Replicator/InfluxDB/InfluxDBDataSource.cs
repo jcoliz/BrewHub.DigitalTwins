@@ -66,11 +66,11 @@ namespace DashboardIoT.InfluxDB
             try
             {
                 _influxdbclient = InfluxDBClientFactory.Create(_options.Url, _options.Token);
-                _logger.LogInformation("InfluxDB: Created client OK on {url}",_options.Url);
+                _logger.LogInformation("Created client OK on {url}",_options.Url);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "InfluxDB: Create client failed");
+                _logger.LogError(ex, "Create client failed");
                 throw;
             }
         }

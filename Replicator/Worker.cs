@@ -5,11 +5,13 @@ namespace BrewHub.DigitalTwins.Replicator;
 public class Worker : BackgroundService
 {
     private readonly IDataSource _datasource;
+    private readonly ITwinsClient _twins;
     private readonly ILogger _logger;
 
-    public Worker(IDataSource datasource, ILoggerFactory logfact)
+    public Worker(IDataSource datasource, ITwinsClient twins, ILoggerFactory logfact)
     {
         _datasource = datasource;
+        _twins = twins;
         _logger = logfact.CreateLogger(nameof(Worker));
     }
 
