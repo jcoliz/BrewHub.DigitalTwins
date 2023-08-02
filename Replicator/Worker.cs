@@ -1,11 +1,15 @@
+using BrewHub.Dashboard.Core.Providers;
+
 namespace BrewHub.DigitalTwins.Replicator;
 
 public class Worker : BackgroundService
 {
+    private readonly IDataSource _datasource;
     private readonly ILogger _logger;
 
-    public Worker(ILoggerFactory logfact)
+    public Worker(IDataSource datasource, ILoggerFactory logfact)
     {
+        _datasource = datasource;
         _logger = logfact.CreateLogger(nameof(Worker));
     }
 

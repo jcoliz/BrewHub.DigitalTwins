@@ -1,5 +1,7 @@
 using System.Reflection;
+using BrewHub.Dashboard.Core.Providers;
 using BrewHub.DigitalTwins.Replicator;
+using DashboardIoT.InfluxDB;
 
 IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((context,services) =>
@@ -26,6 +28,12 @@ IHost host = Host.CreateDefaultBuilder(args)
             context.Configuration["Codebase:Version"] = version;
             logger.LogInformation("Version: {version}", version);
         }
+
+        // Handle InfluxDB data source
+        services.Configure<InfluxDBDataSource.Options>(
+            context.Configuration.GetSection(InfluxDBDataSource.Options.Section)
+        );        
+        services.AddSingleton<IDataSource, InfluxDBDataSource>();
         
         services.AddHostedService<Worker>();
     })

@@ -11,12 +11,13 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Text.RegularExpressions;
 using BrewHub.Dashboard.Core.Models;
+using BrewHub.Dashboard.Core.Providers;
 
 namespace DashboardIoT.InfluxDB
 {
-    public class InfluxDBDataSource : IDisposable
+    public class InfluxDBDataSource : IDataSource, IDisposable
     {
-        private readonly ILogger<InfluxDBDataSource> _logger;
+        private readonly ILogger _logger;
         private readonly InfluxDBClient _influxdbclient;
         private readonly Options _options;
 
@@ -58,9 +59,9 @@ namespace DashboardIoT.InfluxDB
             public string Bucket { get; private set; }
         }
 
-        public InfluxDBDataSource(IOptions<Options> options, ILogger<InfluxDBDataSource> logger)
+        public InfluxDBDataSource(IOptions<Options> options, ILoggerFactory logfact)
         {
-            _logger = logger;
+            _logger = logfact.CreateLogger(nameof(InfluxDBDataSource));
             _options = options.Value;
             try
             {
