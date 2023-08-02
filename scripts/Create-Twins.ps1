@@ -6,7 +6,7 @@ az dt model create -n $env:TWINSNAME --models ..\..\BrewHub.Devices.Still6UnitCo
 # Create twins of the physical device & components
 $Device = "west-1"
 az dt twin create -n $env:TWINSNAME --dtmi "dtmi:brewhub:devices:BaseDevice;1" --twin-id "$Device-Device" --properties '@initialstate-device.json'
-az dt twin create -n $env:TWINSNAME --dtmi "dtmi:brewhub:sensors:TH;1" --twin-id "$Device-amb"
+az dt twin create -n $env:TWINSNAME --dtmi "dtmi:brewhub:sensors:TH;1" --twin-id "$Device-amb" --properties '@initialstate-th.json'
 az dt twin create -n $env:TWINSNAME --dtmi "dtmi:brewhub:controls:Thermostat;1" --twin-id "$Device-cv"
 az dt twin create -n $env:TWINSNAME --dtmi "dtmi:brewhub:controls:Thermostat;1" --twin-id "$Device-rv"
 
