@@ -46,7 +46,8 @@ public class Worker : BackgroundService
             var telemetrys = new Dictionary<string, string[]>()
             {
                 { "dtmi:brewhub:prototypes:still_6_unit;1", new[] { "WorkingSet", "CpuLoad", "Status" } },
-                { "dtmi:brewhub:sensors:TH;1", new[] { "t", "h" } }
+                { "dtmi:brewhub:sensors:TH;1", new[] { "t", "h" } },
+                { "dtmi:brewhub:controls:Thermostat;1", new[] { "t", "Status" } }
             };
 
             // Add a patch for each non-telemetry

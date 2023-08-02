@@ -7,8 +7,8 @@ az dt model create -n $env:TWINSNAME --models ..\..\BrewHub.Devices.Still6UnitCo
 $Device = "west-1"
 az dt twin create -n $env:TWINSNAME --dtmi "dtmi:brewhub:devices:BaseDevice;1" --twin-id "$Device-Device" --properties '@initialstate-device.json'
 az dt twin create -n $env:TWINSNAME --dtmi "dtmi:brewhub:sensors:TH;1" --twin-id "$Device-amb" --properties '@initialstate-th.json'
-az dt twin create -n $env:TWINSNAME --dtmi "dtmi:brewhub:controls:Thermostat;1" --twin-id "$Device-cv"
-az dt twin create -n $env:TWINSNAME --dtmi "dtmi:brewhub:controls:Thermostat;1" --twin-id "$Device-rv"
+az dt twin create -n $env:TWINSNAME --dtmi "dtmi:brewhub:controls:Thermostat;1" --twin-id "$Device-ct" --properties '@initialstate-thermostat.json'
+az dt twin create -n $env:TWINSNAME --dtmi "dtmi:brewhub:controls:Thermostat;1" --twin-id "$Device-rt" --properties '@initialstate-thermostat.json'
 
 # Create twin of of the overall machinery
 az dt model create -n $env:TWINSNAME --models .\distilateur.json
@@ -17,5 +17,5 @@ az dt twin create -n $env:TWINSNAME --dtmi "dtmi:com:brewhub:machinery:distilate
 # Establish relationships
 az dt twin relationship create -n $env:TWINSNAME --relationship-id has_ambient --relationship rel_has_ambient --twin-id $Device --target "$Device-amb"
 az dt twin relationship create -n $env:TWINSNAME --relationship-id has_device --relationship rel_has_device --twin-id $Device --target "$Device-Device"
-az dt twin relationship create -n $env:TWINSNAME --relationship-id has_thermostat_cv --relationship rel_has_thermostat --twin-id $Device --target "$Device-cv"
-az dt twin relationship create -n $env:TWINSNAME --relationship-id has_thermostat_rv --relationship rel_has_thermostat --twin-id $Device --target "$Device-rv"
+az dt twin relationship create -n $env:TWINSNAME --relationship-id has_thermostat_ct --relationship rel_has_thermostat --twin-id $Device --target "$Device-ct"
+az dt twin relationship create -n $env:TWINSNAME --relationship-id has_thermostat_rt --relationship rel_has_thermostat --twin-id $Device --target "$Device-rt"
