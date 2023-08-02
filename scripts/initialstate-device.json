@@ -9,5 +9,8 @@
     "processorArchitecture": "empty",
     "processorManufacturer": "empty",
     "totalStorage": 0,
-    "totalMemory": 0
+    "totalMemory": 0,
+    "CurrentCpuLoad": 0,
+    "CurrentStatus": 0,
+    "CurrentWorkingSet": 0
 }

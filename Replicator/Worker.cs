@@ -45,6 +45,12 @@ public class Worker : BackgroundService
                 updateTwinData.AppendReplace($"/{point.__Field}", point.__Value);
             }
 
+            // Upload telemetry to "Current{Metric}" property
+            foreach(var point in data.Where(x=>x.__Component == null && telemetry.Contains(x.__Field)))
+            {
+                updateTwinData.AppendReplace($"/Current{point.__Field}", point.__Value);
+            }
+
             // Update it!
             var twinId = "west-1-Device";
             await _twins.UpdateDigitalTwinAsync(twinId, updateTwinData);
