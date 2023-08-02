@@ -1,3 +1,4 @@
+using Azure;
 using BrewHub.Dashboard.Core.Providers;
 
 namespace BrewHub.DigitalTwins.Replicator;
@@ -19,6 +20,7 @@ public class Worker : BackgroundService
     {
         while (!stoppingToken.IsCancellationRequested)
         {
+            await DoReplicationAsync();
             _logger.LogInformation("OK");
             await Task.Delay(1000, stoppingToken);
         }
@@ -26,11 +28,30 @@ public class Worker : BackgroundService
 
     protected async Task DoReplicationAsync()
     {
-        // Authenticate with Digital Twins
-        // Open connection to InfluxDB
-        // Get last values for all metrics on this device and all its components
-        // Translate into a patch document
-        // Just for the device right now
-        // Update it!
+        try
+        {
+            // Get last values for all metrics on this device and all its components
+            var device = "west-1";
+            var data = await _datasource.GetLatestDevicePropertiesAsync(device);
+
+            // Translate into a patch document
+            var updateTwinData = new JsonPatchDocument();
+
+            // Just for the device right now
+            // And exclude telemetry
+            var telemetry = new[] { "WorkingSet", "CpuLoad", "Status" };
+            foreach(var point in data.Where(x=>x.__Component == null && !telemetry.Contains(x.__Field)))
+            {
+                updateTwinData.AppendReplace($"/{point.__Field}", point.__Value);
+            }
+
+            // Update it!
+            var twinId = "west-1-Device";
+            await _twins.UpdateDigitalTwinAsync(twinId, updateTwinData);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Replication failed");
+        }
     }
 }

@@ -1,6 +1,6 @@
 {
     "SerialNumber": "empty",
-    "StartTime": "2000-01-01T00:00:00",
+    "StartTimeUTC": "2000-01-01T00:00:00",
     "TelemetryInterval": "PT0S",
     "manufacturer": "empty",
     "model": "empty",

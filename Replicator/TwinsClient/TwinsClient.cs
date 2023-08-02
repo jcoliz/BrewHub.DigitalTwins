@@ -39,9 +39,13 @@ public class TwinsClient : ITwinsClient
             throw;
         }
     }
-    public Task<Response> UpdateDigitalTwinAsync(string digitalTwinId, JsonPatchDocument jsonPatchDocument, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+    public async Task<Response> UpdateDigitalTwinAsync(string digitalTwinId, JsonPatchDocument jsonPatchDocument, ETag? ifMatch = null, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var result = await _client.UpdateDigitalTwinAsync(digitalTwinId, jsonPatchDocument, ifMatch, cancellationToken);
+
+        _logger.LogInformation("OK. Updated digital twin {twin}. Result: {result}/{phrase}", digitalTwinId, result.Status, result.ReasonPhrase);
+
+        return result;
     }
 
 }
