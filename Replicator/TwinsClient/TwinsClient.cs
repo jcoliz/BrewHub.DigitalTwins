@@ -48,4 +48,17 @@ public class TwinsClient : ITwinsClient
         return result;
     }
 
+    public async Task<IEnumerable<string>> QueryDevicesOfModel(string model)
+    {
+        var result = new List<string>();
+
+        var query = $"SELECT * FROM digitaltwins WHERE IS_OF_MODEL('{model}')";
+
+        AsyncPageable<BasicDigitalTwin> qresult = _client.QueryAsync<BasicDigitalTwin>(query);
+        var reslist = new List<BasicDigitalTwin>();
+        await foreach (BasicDigitalTwin item in qresult)
+            result.Add(item.Id);
+        return result;
+    }
+
 }
