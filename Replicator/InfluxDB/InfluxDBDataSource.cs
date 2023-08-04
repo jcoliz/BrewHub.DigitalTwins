@@ -128,7 +128,7 @@ namespace DashboardIoT.InfluxDB
         }
 
         /// <summary>
-        /// Get latest value for all metrics for one device
+        /// Get latest value for all properties (not telemetry) for one device
         /// </summary>
         /// <param name="deviceid">Which device</param>
         /// <returns>
@@ -137,9 +137,9 @@ namespace DashboardIoT.InfluxDB
         public async Task<IEnumerable<Datapoint>> GetLatestDevicePropertiesAsync(string deviceid)
         {
             var flux = $"from(bucket:\"{_options.Bucket}\")" +
-                " |> range(start: -24h)" +
+                " |> range(start: -12h)" +
                 $" |> filter(fn: (r) => r[\"device\"] == \"{deviceid}\")" +
-                " |> filter(fn: (r) => r[\"msgtype\"] != \"NCMD\")" +
+                " |> filter(fn: (r) => r[\"msgtype\"] == \"Property\")" +
                 " |> filter(fn: (r) => r[\"_field\"] != \"Seq\" and r[\"_field\"] != \"__t\")" +
                 " |> last()" +
                 " |> keep(columns: [ \"device\", \"component\", \"_field\", \"_value\", \"_measurement\" ])";
@@ -147,15 +147,11 @@ namespace DashboardIoT.InfluxDB
             return await DoFluxQueryAsync(flux);
         }
         /// <summary>
-        /// Get all metrics for one device over time
+        /// Get all telemetry (not properties) for one device over time
         /// </summary>
         /// <param name="deviceid">Which device</param>
         /// <param name="lookback">How far back from now to look</param>
         /// <param name="interval">How much time should each data point cover</param>
-        /// <remarks>
-        /// That this gets ALL metrics in the lookback window, not just telemetry
-        /// Then it's up to the caller to sort out what to do with that.
-        /// </remarks>
         /// <returns>
         /// Dictionary of component/field names to list of time/values
         /// </returns>
@@ -168,14 +164,13 @@ namespace DashboardIoT.InfluxDB
                 string lookbackstr = regex.Match(XmlConvert.ToString(lookback)).Groups["value"].Value.ToLowerInvariant();
                 string intervalstr = regex.Match(XmlConvert.ToString(interval)).Groups["value"].Value.ToLowerInvariant();
 
-                // TODO: This is where it would be great to have a tag for type=telemetry
-                // Right now, this is a MASSIVE overfetch.
                 var flux = 
                      "import \"types\" " + 
                     $"from(bucket:\"{_options.Bucket}\")" +
                     $" |> range(start: -{lookbackstr})" +
                     $" |> filter(fn: (r) => r[\"device\"] == \"{deviceid}\")" +
-                    " |> filter(fn: (r) => r[\"msgtype\"] != \"NCMD\")" +
+                    " |> filter(fn: (r) => r[\"msgtype\"] == \"Telemetry\")" +
+                    " |> filter(fn: (r) => r[\"_field\"] != \"Seq\" and r[\"_field\"] != \"__t\")" +
                     "  |> filter(fn: (r) => types.isType(v: r._value, type: \"int\") or types.isType(v: r._value, type: \"float\"))" +
                      " |> keep(columns: [ \"device\", \"component\", \"_field\", \"_value\", \"_time\", \"_measurement\" ])" +
                     $" |> aggregateWindow(every: {intervalstr}, fn: mean, createEmpty: false)" +
