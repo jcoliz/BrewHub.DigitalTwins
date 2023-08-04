@@ -1,0 +1,29 @@
+# Rename this file to config.toml, and replace with values for your
+# local setup
+
+[DigitalTwins]
+# URL to the API for this instance
+url = "..."
+
+# Which identity methodology are we using?
+credential = "DefaultAzureCredential"
+#credential = "ClientSecretCredential"
+
+# Below are needed if ClientSecretCredential is used
+
+# The Azure Active Directory tenant (directory) Id of the service principal.
+#tenantId = "...GUID..."
+
+# The client (application) ID of the service principal
+#clientId = "...GUID..."
+
+# A client secret that was generated for the App Registration used to authenticate the client.
+#clientSecret = "...PASSWORD..."
+
+# Configuration for the InfluxDB data source where we are getting data
+
+[InfluxDB]
+url = "..."
+org = "..."
+bucket = "..."
+token = "..."
