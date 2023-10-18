@@ -60,7 +60,7 @@ public class Worker : BackgroundService
                     updates[point.__Component ?? string.Empty].AppendReplace($"/{point.__Field}", point.__Value);
                 }
 
-                // Get last properties on this device and all its components
+                // Get last telemetry on this device and all its components
                 var values = await _datasource.GetSingleDeviceTelemetryAsync(device, _warminterval, _warminterval);
 
                 // Use the first timeslice from these results
